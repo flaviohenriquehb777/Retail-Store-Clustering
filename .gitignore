@@ -1,0 +1,86 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+*.whl
+
+# ---- Virtual Environments ----
+.venv/
+venv/
+ENV/
+env/
+
+# ---- Jupyter Notebook ----
+.ipynb_checkpoints
+notebooks/executed/*
+!notebooks/executed/.gitkeep
+
+# ---- Data ----
+data/01_raw/*
+data/02_interim/*
+data/03_processed/*
+data/04_external/*
+!data/01_raw/.gitkeep
+!data/02_interim/.gitkeep
+!data/03_processed/.gitkeep
+!data/04_external/.gitkeep
+
+# ---- Model artifacts ----
+*.pkl
+*.pickle
+*.joblib
+models/*
+!models/.gitkeep
+
+# ---- IDE / Editor ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Reports and figures ----
+reports/figures/*
+!reports/figures/.gitkeep
+
+# ---- Logs ----
+*.log
+logs/
+
+# ---- Arquivos temporários de execução do deploy (não entram no git) ----
+# CSVs de predição do app/predict.py (gerados em runtime)
+deploy/predicoes_*.csv
+deploy/predicoes_*.csv
+deploy/predicoes_*.csv
+
+# ---- Arquivos de artefatos locais de debug (screenshots, CSV debug scripts _*.py temporários etc)
+screenshot_*.png
+/_*.py
+*.tmp
+*.bak
+
+# ---- Arquivos Office temporários Excel (arquivos ~$ aberto pelo Word/Excel)
+~$*.docx
+~$*.xlsx
+~$*.pptx
