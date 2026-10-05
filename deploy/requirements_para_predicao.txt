@@ -1,0 +1,23 @@
+# requirements_para_predicao.txt
+# Bibliotecas MÍNIMAS necessárias para rodar o classificador de lojas novas (SEM retreino).
+# Instalação em qualquer ambiente Python 3.9+:
+#   pip install -r deploy/requirements_para_predicao.txt
+#
+# Google Colab: essas libs já vêm instaladas. Basta rodar !pip install -q pandas numpy
+# (nenhuma dependência extra é estritamente necessária além de pandas e numpy).
+
+# --- Obrigatórias ---
+numpy>=1.22
+pandas>=1.4
+
+# --- Opcionais (só se você quiser usar os arquivos .pkl do sklearn também;
+#     a rota numpy puro não precisa deles) ---
+scikit-learn>=1.2
+
+# --- Apenas se você quiser rodar também os notebooks de referência ---
+# (não precisa para predição de lojas novas)
+# scipy>=1.9
+# matplotlib>=3.6
+# seaborn>=0.12
+# plotly>=5.11
+# openpyxl>=3.1

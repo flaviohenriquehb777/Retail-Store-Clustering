@@ -1,0 +1,226 @@
+{
+  "versao_modelo": "k5_v2_prof6",
+  "seed": 42,
+  "k": 5,
+  "features": {
+    "ordem_fixa_scaler": [
+      "clientes_medio_dia_log1p",
+      "ticket_medio",
+      "razao_promo",
+      "cv_volatilidade_diaria",
+      "cv_sazonalidade_mensal_log1p",
+      "distancia_concorrente_log1p"
+    ],
+    "colunas_entrada_necessarias_antes_transform": [
+      "clientes_medio_dia",
+      "ticket_medio",
+      "razao_promo",
+      "cv_volatilidade_diaria",
+      "cv_sazonalidade_mensal",
+      "distancia_concorrente"
+    ],
+    "transformacoes_por_feature": {
+      "clientes_medio_dia": {
+        "acao": "log1p",
+        "saida": "clientes_medio_dia_log1p"
+      },
+      "ticket_medio": {
+        "acao": "identidade",
+        "saida": "ticket_medio"
+      },
+      "razao_promo": {
+        "acao": "identidade",
+        "saida": "razao_promo"
+      },
+      "cv_volatilidade_diaria": {
+        "acao": "identidade",
+        "saida": "cv_volatilidade_diaria"
+      },
+      "cv_sazonalidade_mensal": {
+        "acao": "log1p",
+        "saida": "cv_sazonalidade_mensal_log1p"
+      },
+      "distancia_concorrente": {
+        "acao": "imputa_mediana_2.325_e_log1p",
+        "saida": "distancia_concorrente_log1p"
+      }
+    },
+    "mediana_imputacao_distancia_concorrente_metros": 2.325
+  },
+  "standard_scaler": {
+    "ordem_features": [
+      "clientes_medio_dia_log1p",
+      "ticket_medio",
+      "razao_promo",
+      "cv_volatilidade_diaria",
+      "cv_sazonalidade_mensal_log1p",
+      "distancia_concorrente_log1p"
+    ],
+    "mean_": [
+      6.5502132356,
+      9.6437556419,
+      1.4142931045,
+      0.2709220248,
+      0.0906262433,
+      7.6457360245
+    ],
+    "scale_": [
+      0.3725652295,
+      1.985967194,
+      0.1809643564,
+      0.0593830181,
+      0.03308053,
+      1.5494502093
+    ],
+    "var_": [
+      0.1388048503,
+      3.9440656956,
+      0.0327480983,
+      0.0035263428,
+      0.0010943215,
+      2.4007959511
+    ]
+  },
+  "kmeans": {
+    "n_clusters": 5,
+    "parametros_treino": {
+      "n_init": 20,
+      "max_iter": 500,
+      "random_state": 42,
+      "init": "k-means++"
+    },
+    "cluster_centers_scaled_ordem_kmeans0a4": [
+      [
+        -0.6991852119,
+        1.2037893525,
+        -0.4070338927,
+        -0.3295425036,
+        0.0462835519,
+        0.5836444714
+      ],
+      [
+        1.2829218652,
+        -1.1046381675,
+        -0.41292547,
+        -0.3665345617,
+        0.0702351276,
+        -1.3164331725
+      ],
+      [
+        -0.3618648098,
+        -0.0621546771,
+        1.4051950784,
+        1.2931949221,
+        -0.1410594022,
+        0.129802341
+      ],
+      [
+        -0.2642011764,
+        -0.3660823788,
+        -0.3016855583,
+        1.2355488647,
+        3.2185358901,
+        0.1940335667
+      ],
+      [
+        0.1369051398,
+        -0.2804507569,
+        -0.309506268,
+        -0.5360326683,
+        -0.4264549427,
+        0.1325861572
+      ]
+    ],
+    "inertia": 3293.4268
+  },
+  "clusters": {
+    "1": {
+      "kmeans_cluster_id": 1,
+      "ordem_negocio": "C01",
+      "nome": "Alto Fluxo / Ponto de Passagem",
+      "n_lojas_originais": 193,
+      "pct_rede": 17.3,
+      "perfil_medio_raw": {
+        "venda_media_dia": 8816.23,
+        "clientes_medio_dia": 1211.54,
+        "ticket_medio": 7.45,
+        "razao_promo": 1.3396,
+        "cv_volatilidade_diaria": 0.2492,
+        "cv_sazonalidade_mensal": 0.0978,
+        "distancia_concorrente_m": 433.3
+      }
+    },
+    "4": {
+      "kmeans_cluster_id": 4,
+      "ordem_negocio": "C04",
+      "nome": "Standard / Classe Média",
+      "n_lojas_originais": 357,
+      "pct_rede": 32.0,
+      "perfil_medio_raw": {
+        "venda_media_dia": 6928.01,
+        "clientes_medio_dia": 761.45,
+        "ticket_medio": 9.09,
+        "razao_promo": 1.3583,
+        "cv_volatilidade_diaria": 0.2391,
+        "cv_sazonalidade_mensal": 0.0797,
+        "distancia_concorrente_m": 4339.1
+      }
+    },
+    "0": {
+      "kmeans_cluster_id": 0,
+      "ordem_negocio": "C00",
+      "nome": "Ticket Premium / Mix Caro",
+      "n_lojas_originais": 287,
+      "pct_rede": 25.7,
+      "perfil_medio_raw": {
+        "venda_media_dia": 6653.22,
+        "clientes_medio_dia": 552.59,
+        "ticket_medio": 12.03,
+        "razao_promo": 1.3406,
+        "cv_volatilidade_diaria": 0.2514,
+        "cv_sazonalidade_mensal": 0.0968,
+        "distancia_concorrente_m": 8221.1
+      }
+    },
+    "2": {
+      "kmeans_cluster_id": 2,
+      "ordem_negocio": "C02",
+      "nome": "Promo-Dependent",
+      "n_lojas_originais": 229,
+      "pct_rede": 20.5,
+      "perfil_medio_raw": {
+        "venda_media_dia": 5967.91,
+        "clientes_medio_dia": 630.04,
+        "ticket_medio": 9.52,
+        "razao_promo": 1.6686,
+        "cv_volatilidade_diaria": 0.3477,
+        "cv_sazonalidade_mensal": 0.0899,
+        "distancia_concorrente_m": 6904.3
+      }
+    },
+    "3": {
+      "kmeans_cluster_id": 3,
+      "ordem_negocio": "C03",
+      "nome": "Sazonal Raro / Temporada",
+      "n_lojas_originais": 49,
+      "pct_rede": 4.4,
+      "perfil_medio_raw": {
+        "venda_media_dia": 5737.92,
+        "clientes_medio_dia": 669.45,
+        "ticket_medio": 8.92,
+        "razao_promo": 1.3597,
+        "cv_volatilidade_diaria": 0.3443,
+        "cv_sazonalidade_mensal": 0.22,
+        "distancia_concorrente_m": 9061.0
+      }
+    }
+  },
+  "pipeline_predicao_novas_lojas_regra_geral": [
+    "PASSO 1: calcular 6 features raw a partir dos dados diários da loja nova (se a série for < 180 dias, avisar que classificação é provisória).",
+    "PASSO 2: aplicar regras de transformação por feature (log1p e imputação distância = 2.325).",
+    "PASSO 3: montar matriz X de 1 row com colunas NA MESMA ORDEM de FS (scaler.feature_names_in_).",
+    "PASSO 4: padronizar com o scaler carregado (SÓ .predict/.transform; NUNCA .fit/_fit_transform em dados novos).",
+    "PASSO 5: KMeans.predict(X_scaled) → cluster id 0..4 → mapeia para ordem_negocio C01..C03 + nome perfil.",
+    "PASSO 6 (segurança): computa distância Euclidiana padronizada a cada centróide. Se a menor distância > 3.0× a média das distâncias da loja original (outlier), sinaliza como 'LOJA FORA DO ESPAÇO — validar manualmente'."
+  ]
+}
