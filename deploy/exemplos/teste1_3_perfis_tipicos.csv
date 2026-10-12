@@ -1,0 +1,4 @@
+﻿id_loja;nome_loja;cluster_esperado;perfil_esperado;clientes_medio_dia;ticket_medio;razao_promo;cv_volatilidade_diaria;cv_sazonalidade_mensal;distancia_concorrente
+2001;Nova Shopping Center - Alto Fluxo;C01;Alto Fluxo / Ponto de Passagem;1229.5936756291665;7.419081933136842;1.3655965584196152;0.2605406592711499;0.09710013162293014;430.22095352226575
+2002;Nova Bairro Nobre - Ticket Premium;C00;Ticket Premium / Mix Caro;578.7719358537172;12.311514121250294;1.3217520010382928;0.25544418388768825;0.0954319018021287;8106.284803311176
+2003;Nova Periferia - Promo Dependente;C02;Promo-Dependent;634.6172668900188;8.973868465342251;1.5822408124505951;0.34184765823280344;0.08718533097616793;6969.391058147126
