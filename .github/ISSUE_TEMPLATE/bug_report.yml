@@ -46,7 +46,7 @@ body:
     id: versao
     attributes:
       label: Versão / commit
-      description: Versão (ex.: v1.0.0) ou hash do commit em que o problema ocorre.
+      description: "Versão (ex.: v1.0.0) ou hash do commit em que o problema ocorre."
       placeholder: v1.0.0
 
   - type: textarea

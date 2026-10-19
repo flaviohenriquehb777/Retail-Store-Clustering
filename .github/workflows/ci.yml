@@ -27,7 +27,7 @@ jobs:
       - name: Sincronizar dependências
         run: uv sync --extra dev
 
-      - name: Lint (erros críticos: sintaxe, nomes indefinidos, comparações inválidas)
+      - name: "Lint (erros críticos — sintaxe, nomes indefinidos, comparações inválidas)"
         run: uv run ruff check .
 
       - name: Testes automatizados
