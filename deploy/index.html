@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Classificador de Lojas Novas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<link rel="icon" type="image/png" href="assets/favicon-linkedin.png">
+<link rel="apple-touch-icon" href="assets/favicon-linkedin.png">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<header class="cabecalho">
+  <div class="logo-e-titulo">
+    <img src="assets/logo-fh-data.png" alt="FH Data" class="logo-header">
+    <h1>Classificador de Lojas Novas</h1>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ==========================================================
+       CARD 1: Resumo / Regras do modelo
+       ========================================================== -->
+  <section class="card">
+    <h2>Como funciona (resumo executivo)</h2>
+    <div class="grid-3">
+      <div>
+        <h3>1️⃣ 6 features de entrada</h3>
+        <p class="texto-sec">
+          clientes_medio_dia · ticket_medio (R$) · razao_promo ·
+          cv_volatilidade_diaria · cv_sazonalidade_mensal · distancia_concorrente (m).
+        </p>
+      </div>
+      <div>
+        <h3>2️⃣ Pipeline fixo (sem retreino)</h3>
+        <p class="texto-sec">
+          log1p em clientes, sazonalidade, distância · imputa distância nula com mediana 2.325 m ·
+          padroniza pelo scaler original · atribui ao centróide mais próximo (distância Euclidiana).
+        </p>
+      </div>
+      <div>
+        <h3>3️⃣ 5 perfis de negócio (100% acionáveis)</h3>
+        <p class="texto-sec">
+          <span class="tag C01">C01</span> Alto Fluxo ·
+          <span class="tag C04">C04</span> Standard ·
+          <span class="tag C00">C00</span> Ticket Premium ·
+          <span class="tag C02">C02</span> Promo-Dependent ·
+          <span class="tag C03">C03</span> Sazonal Raro.
+        </p>
+      </div>
+    </div>
+
+    <details class="sumario-ref">
+      <summary>📊 Perfil médio de referência dos 5 clusters (1.115 lojas)</summary>
+      <table class="tabela" id="tabelaRefClusters">
+        <thead>
+          <tr>
+            <th>Cluster</th>
+            <th>Nome Perfil</th>
+            <th>Lojas</th>
+            <th>% da rede</th>
+            <th>Venda Média Dia (R$)</th>
+            <th>Clientes Médio Dia</th>
+            <th>Ticket Médio (R$)</th>
+            <th>Razão Promo</th>
+            <th>CV Volatilidade</th>
+            <th>CV Sazonalidade</th>
+            <th>Dist Concorrente (m)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </details>
+  </section>
+
+  <!-- ==========================================================
+       CARD 2: Abas (1 loja manual OU lote CSV)
+       ========================================================== -->
+  <section class="card">
+    <h2>Classificar lojas novas</h2>
+
+    <div class="abas">
+      <div class="aba ativa" data-aba="manual">🧮 Classificar 1 loja (formulário)</div>
+      <div class="aba" data-aba="lote">📥 Lote (upload CSV com múltiplas lojas)</div>
+    </div>
+
+    <!-- Aba 1: formulário manual -->
+    <div data-conteudo="manual">
+      <div class="grid-3">
+        <div>
+          <label class="campo">id_loja <small>(opcional)</small></label>
+          <input type="text" id="m_id" placeholder="Ex.: 2001">
+        </div>
+        <div>
+          <label class="campo">nome_loja <small>(opcional)</small></label>
+          <input type="text" id="m_nome" placeholder="Ex.: Loja XYZ - Shopping">
+        </div>
+        <div></div>
+      </div>
+      <hr class="divider">
+      <h3>Features operacionais (valores médios do período de observação)</h3>
+      <div class="grid-3">
+        <div>
+          <label class="campo">clientes_medio_dia <small>média de clientes por dia operando</small></label>
+          <input type="number" id="m_clientes" min="0" step="any" value="900" required>
+        </div>
+        <div>
+          <label class="campo">ticket_medio (R$) <small>venda_media_dia / clientes_medio_dia</small></label>
+          <input type="number" id="m_ticket" min="0.001" step="any" value="9.50" required>
+        </div>
+        <div>
+          <label class="campo">razao_promo <small>venda_em_promo / venda_sem_promo</small></label>
+          <input type="number" id="m_razaopromo" min="0" step="any" value="1.40" required>
+        </div>
+        <div>
+          <label class="campo">cv_volatilidade_diaria <small>std(vendas_dia) / média(vendas_dia)</small></label>
+          <input type="number" id="m_cvvol" min="0" step="any" value="0.27" required>
+        </div>
+        <div>
+          <label class="campo">cv_sazonalidade_mensal <small>CV das vendas médias por mês</small></label>
+          <input type="number" id="m_cvsaz" min="0" step="any" value="0.09" required>
+        </div>
+        <div>
+          <label class="campo">distancia_concorrente (m) <small>vazio → imputa mediana 2.325 m</small></label>
+          <input type="number" id="m_dist" min="0" step="any" placeholder="vazio = desconhecido">
+        </div>
+      </div>
+      <div class="linha-botoes">
+        <button class="botao primario" id="btnClassificar1">🎯 Classificar esta loja</button>
+        <button class="botao secundario" id="btnLimpar1">🧹 Limpar</button>
+      </div>
+
+      <div id="res1" class="espaco-resultado"></div>
+    </div>
+
+    <!-- Aba 2: lote CSV -->
+    <div data-conteudo="lote" style="display:none;">
+      <p class="texto-sec">
+        O CSV pode ter as colunas:
+        <code>id_loja</code> (opcional),
+        <code>nome_loja</code> (opcional),
+        <code>clientes_medio_dia</code>,
+        <code>ticket_medio</code>,
+        <code>razao_promo</code>,
+        <code>cv_volatilidade_diaria</code>,
+        <code>cv_sazonalidade_mensal</code>,
+        <code>distancia_concorrente</code>.
+        Aceita separadores <b>,</b> ou <b>;</b>, encoding UTF-8.
+        Linha de cabeçalho OBRIGATÓRIA (1 linha por loja nova).
+      </p>
+
+      <div class="linha-botoes">
+        <label class="botao secundario">📁 Escolher CSV
+          <input type="file" id="fileCsv" accept=".csv,text/csv" style="display:none;">
+        </label>
+        <button class="botao secundario" id="btnBaixarModelo">📥 Baixar modelo CSV (exemplo 3 lojas)</button>
+      </div>
+      <div id="arqEscolhido" class="arq-escolhido"></div>
+      <div id="resLote" class="espaco-resultado"></div>
+    </div>
+  </section>
+
+</div>
+
+<script src="classificador.js"></script>
+<script>
+/* ============================================================
+   UI do app: navegação de abas + renderização de resultados.
+   ============================================================ */
+
+// 1) Popular tabela de referência de clusters
+(function popularRef() {
+  const tbody = document.querySelector("#tabelaRefClusters tbody");
+  const clustersOrdenados = [...MODELO.clusters].sort(
+    (a, b) => a.ordem_negocio.localeCompare(b.ordem_negocio)
+  );
+  for (const c of clustersOrdenados) {
+    const p = c.perfil_medio_raw;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="tag ${c.cor_tag}">${c.ordem_negocio}</span></td>
+      <td><b>${c.nome}</b></td>
+      <td>${fmtNum(c.n_lojas_originais,0)}</td>
+      <td>${fmtNum(c.pct_rede,1)}%</td>
+      <td>${fmtNum(p.venda_media_dia,2)}</td>
+      <td>${fmtNum(p.clientes_medio_dia,2)}</td>
+      <td>${fmtNum(p.ticket_medio,2)}</td>
+      <td>${fmtNum(p.razao_promo,3)}</td>
+      <td>${fmtNum(p.cv_volatilidade_diaria,3)}</td>
+      <td>${fmtNum(p.cv_sazonalidade_mensal,3)}</td>
+      <td>${fmtNum(p.distancia_concorrente_m,1)}</td>`;
+    tbody.appendChild(tr);
+  }
+})();
+
+// 2) Navegação de abas
+document.querySelectorAll(".aba").forEach((a) => {
+  a.addEventListener("click", () => {
+    document.querySelectorAll(".aba").forEach((x) => x.classList.remove("ativa"));
+    a.classList.add("ativa");
+    const qual = a.dataset.aba;
+    document.querySelectorAll("[data-conteudo]").forEach((div) => {
+      div.style.display = div.dataset.conteudo === qual ? "" : "none";
+    });
+  });
+});
+
+// 3) Classificar 1 loja manual
+$id("btnClassificar1").addEventListener("click", () => {
+  const loja = {
+    id_loja: $id("m_id").value || null,
+    nome_loja: $id("m_nome").value || null,
+    clientes_medio_dia: $id("m_clientes").value,
+    ticket_medio: $id("m_ticket").value,
+    razao_promo: $id("m_razaopromo").value,
+    cv_volatilidade_diaria: $id("m_cvvol").value,
+    cv_sazonalidade_mensal: $id("m_cvsaz").value,
+    distancia_concorrente: $id("m_dist").value || null,
+  };
+  const r = classificarLoja(loja);
+  $id("res1").innerHTML = renderizarResultadoUmaLoja(r);
+});
+
+$id("btnLimpar1").addEventListener("click", () => {
+  ["m_id","m_nome","m_dist"].forEach((i) => $id(i).value = "");
+  $id("m_clientes").value = "900";
+  $id("m_ticket").value = "9.50";
+  $id("m_razaopromo").value = "1.40";
+  $id("m_cvvol").value = "0.27";
+  $id("m_cvsaz").value = "0.09";
+  $id("res1").innerHTML = "";
+});
+
+// 4) Lote CSV
+const EXEMPLO_CSV = `id_loja;nome_loja;clientes_medio_dia;ticket_medio;razao_promo;cv_volatilidade_diaria;cv_sazonalidade_mensal;distancia_concorrente
+2001;Nova - Centro (Alto Fluxo);1200;7.80;1.34;0.25;0.09;420
+2002;Nova - Bairro Classe A (Ticket Premium);560;11.90;1.34;0.25;0.09;
+2003;Nova - Periferia (Promo-Dependent);620;9.50;1.68;0.35;0.09;6800
+`;
+
+$id("btnBaixarModelo").addEventListener("click", () => {
+  const blob = new Blob([EXEMPLO_CSV], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "exemplo_3_lojas_novas.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+$id("fileCsv").addEventListener("change", (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  $id("arqEscolhido").innerHTML = `Arquivo selecionado: <b>${f.name}</b> (${(f.size/1024).toFixed(1)} KB).`;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const texto = reader.result;
+    const linhas = parseCSV(texto);
+    if (!linhas.length) {
+      $id("resLote").innerHTML = `<div class="erro">Arquivo vazio ou sem linhas de dados.</div>`;
+      return;
+    }
+    // Classifica todas
+    const resultados = [];
+    for (let i = 0; i < linhas.length; i++) {
+      const r = classificarLoja(linhas[i]);
+      resultados.push(r);
+    }
+    // Checa erros
+    const erros = resultados.filter((r) => r.erro);
+    if (erros.length) {
+      const detalhes = erros.slice(0, 5).map((e, i) => `<li><b>Linha ${i+2}:</b> ${e.erro}</li>`).join("");
+      $id("resLote").innerHTML = `<div class="erro"><b>Há erros em ${erros.length} linha(s):</b><ul>${detalhes}</ul></div>`;
+      return;
+    }
+    $id("resLote").innerHTML = renderizarResultadoLote(resultados);
+  };
+  reader.readAsText(f, "utf-8");
+});
+
+// ============================================================
+// Renderizadores HTML de resultado
+// ============================================================
+function renderizarResultadoUmaLoja(r) {
+  if (r.erro) return `<div class="erro">${r.erro}</div>`;
+  const cluster = MODELO.clusters[r.kmeans_cluster_id];
+  const p = cluster.perfil_medio_raw;
+
+  const tagsAvisos = [];
+  if (r.flag_outlier_fora_do_espaco)
+    tagsAvisos.push(`<div class="aviso"><b>⚠️ Loja fora do espaço de referência.</b> Distância ao centróide (${fmtNum(r.distancia_ao_centroide,3)}) é maior que 3× a média dela a todos os centroides (${fmtNum(r.media_distancia_a_todos_centroides,3)}). Recomenda validação manual.</div>`);
+  if (r.distancia_foi_imputada)
+    tagsAvisos.push(`<div class="info">ℹ️ Distância ao concorrente não informada. Usamos a mediana global de referência = 2.325 m.</div>`);
+
+  const distsOrdenadas = Object.entries(r.dist_por_ordem_negocio).sort((a,b)=>a[1]-b[1]);
+
+  return `
+    <div class="box-resultado">
+      <div class="linha-classificacao">
+        <div class="cab-classif">
+          <div class="cab-classif-label">CLASSIFICAÇÃO</div>
+          <div class="cab-classif-tags">
+            <span class="tag ${r.cor_tag} tag-grande">${r.ordem_negocio}</span>
+            <span class="nome-perfil">${r.nome_perfil}</span>
+          </div>
+          <div class="cab-classif-sub">
+            KMeans cluster_id = ${r.kmeans_cluster_id} ·
+            ${r.n_lojas_originais ? `${cluster.n_lojas_originais} lojas originais (${cluster.pct_rede}% da rede)` : ""}
+          </div>
+        </div>
+        <div class="kpi kpi-classif">
+          <div>
+            <div class="label">Dist ao centróide</div>
+            <div class="valor">${fmtNum(r.distancia_ao_centroide,3)}</div>
+            <div class="sub">média a todos 5: ${fmtNum(r.media_distancia_a_todos_centroides,3)}</div>
+          </div>
+          <div>
+            <div class="label">Cliente / dia</div>
+            <div class="valor">${fmtNum(r.raw.clientes_medio_dia,0)}</div>
+            <div class="sub">ref grupo: ${fmtNum(p.clientes_medio_dia,0)}</div>
+          </div>
+          <div>
+            <div class="label">Ticket Médio</div>
+            <div class="valor">R$ ${fmtNum(r.raw.ticket_medio,2)}</div>
+            <div class="sub">ref grupo: R$ ${fmtNum(p.ticket_medio,2)}</div>
+          </div>
+          <div>
+            <div class="label">Razão Promo</div>
+            <div class="valor">${fmtNum(r.raw.razao_promo,3)}</div>
+            <div class="sub">ref grupo: ${fmtNum(p.razao_promo,3)}</div>
+          </div>
+        </div>
+      </div>
+      ${tagsAvisos.join("")}
+
+      <h3>📏 Distância (espaço padronizado) aos 5 centróides (menor = vencedor)</h3>
+      <table class="tabela">
+        <thead><tr><th>Posição</th><th>Cluster</th><th>Nome</th><th>Distância</th><th>Dif. vs vencedor</th></tr></thead>
+        <tbody>
+          ${distsOrdenadas.map(([ordem,d], idx) => {
+            const c = MODELO.clusters.find((c)=>c.ordem_negocio===ordem);
+            const diff = d - r.distancia_ao_centroide;
+            return `<tr>
+              <td>${idx+1}º</td>
+              <td><span class="tag ${c.cor_tag}">${ordem}</span></td>
+              <td>${c.nome}</td>
+              <td>${fmtNum(d,4)}</td>
+              <td>${idx===0?"—":"+"+fmtNum(diff,4)}</td>
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderizarResultadoLote(resultados) {
+  const n = resultados.length;
+
+  // Contagem por cluster
+  const cont = {};
+  for (const r of resultados) cont[r.ordem_negocio] = (cont[r.ordem_negocio] || 0) + 1;
+  const contHtml = Object.entries(cont).sort(([a],[b])=>a.localeCompare(b)).map(([o, q]) =>
+    `<span class="tag ${o}">${o}: ${q} loja${q===1?"":"s"}</span>`
+  ).join(" ");
+  const nOut = resultados.filter((r)=>r.flag_outlier_fora_do_espaco).length;
+  const nDistImp = resultados.filter((r)=>r.distancia_foi_imputada).length;
+
+  // Linhas tabela
+  const linhasTabela = resultados.map((r, i) => {
+    const vals = Object.entries(r.dist_por_ordem_negocio).sort(([a0],[b0])=>a0.localeCompare(b0)).map(([,d])=>`<td>${fmtNum(d,3)}</td>`);
+    return `<tr>
+      <td>${i+1}</td>
+      <td>${r.id_loja ?? "—"}</td>
+      <td>${r.nome_loja ?? "—"}</td>
+      <td><span class="tag ${r.cor_tag}">${r.ordem_negocio}</span></td>
+      <td><b>${r.nome_perfil}</b></td>
+      <td>${fmtNum(r.distancia_ao_centroide,3)}</td>
+      <td>${r.flag_outlier_fora_do_espaco?'<span class="tag outlier">OUTLIER</span>':'<span class="tag ok">ok</span>'}</td>
+      <td>${r.distancia_foi_imputada?'<span class="tag imputada">imputada</span>':'<span class="tag ok">ok</span>'}</td>
+      ${vals.join("")}
+    </tr>`;
+  }).join("");
+
+  // Cabecalho distâncias (C00..C04)
+  const cabDists = Object.keys(resultados[0].dist_por_ordem_negocio).sort()
+    .map((o)=>`<th>dist ${o}</th>`).join("");
+
+  // Prepara CSV para download
+  const csvRows = resultados.map((r)=>{
+    const row = {
+      id_loja: r.id_loja ?? "",
+      nome_loja: r.nome_loja ?? "",
+      clientes_medio_dia: r.raw.clientes_medio_dia,
+      ticket_medio: r.raw.ticket_medio,
+      razao_promo: r.raw.razao_promo,
+      cv_volatilidade_diaria: r.raw.cv_volatilidade_diaria,
+      cv_sazonalidade_mensal: r.raw.cv_sazonalidade_mensal,
+      distancia_concorrente: r.raw.distancia_concorrente,
+      distancia_foi_imputada: r.distancia_foi_imputada ? "SIM" : "não",
+      kmeans_cluster_id: r.kmeans_cluster_id,
+      ordem_negocio: r.ordem_negocio,
+      nome_perfil: r.nome_perfil,
+      distancia_ao_centroide: r.distancia_ao_centroide.toFixed(4),
+      media_distancia_5_centroides: r.media_distancia_a_todos_centroides.toFixed(4),
+      flag_outlier_fora_do_espaco: r.flag_outlier_fora_do_espaco ? "SIM" : "não",
+      dist_C00: r.dist_por_ordem_negocio.C00.toFixed(4),
+      dist_C01: r.dist_por_ordem_negocio.C01.toFixed(4),
+      dist_C02: r.dist_por_ordem_negocio.C02.toFixed(4),
+      dist_C03: r.dist_por_ordem_negocio.C03.toFixed(4),
+      dist_C04: r.dist_por_ordem_negocio.C04.toFixed(4),
+    };
+    return row;
+  });
+  const csvBlob = new Blob(["\ufeff"+toCSV(csvRows)], {type:"text/csv;charset=utf-8;"});
+  const csvUrl = URL.createObjectURL(csvBlob);
+  const ts = new Date().toISOString().slice(0,19).replace(/[-:T]/g,"_");
+  const nomeArq = `predicoes_${ts}.csv`;
+
+  return `
+    <div class="box-resultado">
+      <h3>✅ ${n} loja(s) classificada(s)</h3>
+      <div class="resumo-tags">
+        ${contHtml}
+        ${nOut ? `<span class="tag outlier">⚠️ ${nOut} fora do espaço</span>`:""}
+        ${nDistImp ? `<span class="tag imputada">ℹ️ ${nDistImp} distância imputada</span>`:""}
+      </div>
+
+      <div class="baixa-pred">
+        <a class="botao sucesso" href="${csvUrl}" download="${nomeArq}" target="_blank">⬇️ Baixar CSV com todas as predições (${nomeArq})</a>
+      </div>
+
+      <div class="tabela-rolavel">
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>#</th><th>id_loja</th><th>nome_loja</th>
+              <th>Cluster</th><th>Perfil Comercial</th>
+              <th>Dist. centroide</th>
+              <th>Outlier?</th><th>Dist. imputada?</th>
+              ${cabDists}
+            </tr>
+          </thead>
+          <tbody>${linhasTabela}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
