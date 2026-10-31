@@ -13,27 +13,29 @@
   </p>
 </div>
 
-<div align="center" style="margin: 32px 0;">
+<div align="center" style="margin: 28px 0 8px 0;">
   <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/"
-     title="Abrir Classificador de Lojas Novas no GitHub Pages">
+     target="_blank"
+     rel="noopener noreferrer"
+     title="Abrir Classificador de Lojas Novas — classifique novas lojas SEM retreino">
     <img
       src="./assets/thumbnail-classificador-lojas-novas.png"
-      alt="Preview do Classificador de Lojas Novas — Tema Escuro"
-      width="820"
+      alt="Miniatura do Classificador de Lojas Novas — clique para abrir a aplicação"
+      width="720"
       style="
-        border-radius: 18px;
+        border-radius: 14px;
         border: 1px solid #2b3270;
         box-shadow:
-          0 2px 4px  rgba(99,102,241,0.08),
-          0 12px 32px rgba(99,102,241,0.18),
-          0 24px 60px rgba(0,0,0,0.45);
+          0 1px 3px   rgba(99,102,241,0.10),
+          0 8px 20px  rgba(99,102,241,0.18),
+          0 18px 40px rgba(0,0,0,0.45);
         transition: transform .25s ease, box-shadow .25s ease;
       "
-      onmouseover="this.style.transform='translateY(-3px) scale(1.01)'; this.style.boxShadow='0 4px 8px rgba(99,102,241,0.12), 0 20px 46px rgba(99,102,241,0.26), 0 32px 72px rgba(0,0,0,0.55)';"
+      onmouseover="this.style.transform='translateY(-2px) scale(1.006)'; this.style.boxShadow='0 2px 5px rgba(99,102,241,0.13), 0 14px 30px rgba(99,102,241,0.24), 0 26px 56px rgba(0,0,0,0.55)';"
       onmouseout="this.style.transform=''; this.style.boxShadow='';">
   </a>
-  <p align="center" style="margin-top:14px; color:#8b93c7; font-size:14px;">
-    👆 <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/" style="text-decoration:none; color:#818cf8; font-weight:600;">Clique para abrir o Classificador de Lojas Novas</a> (GitHub Pages · 100% client-side · sem backend)
+  <p align="center" style="margin-top:12px; color:#8b93c7; font-size:13.5px;">
+    👆 <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:#818cf8; font-weight:600;">Clique na imagem para abrir a aplicação</a> e classifique novas lojas (expansão / reformadas) sem retreinar o modelo.
   </p>
 </div>
 
