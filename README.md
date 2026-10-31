@@ -14,10 +14,10 @@
 </div>
 
 <div align="center" style="margin: 28px 0 8px 0;">
-  <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/index.html"
+  <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/deploy/index.html"
      target="_blank"
      rel="noopener noreferrer"
-     title="Abrir Classificador de Lojas Novas — página inteira, SEM chrome do GitHub">
+     title="Abrir Classificador de Lojas Novas — página inteira, só a aplicação">
     <img
       src="./assets/thumbnail-classificador-lojas-novas.png"
       alt="Miniatura do Classificador de Lojas Novas — clique para abrir a aplicação em página inteira"
@@ -35,9 +35,9 @@
       onmouseout="this.style.transform=''; this.style.boxShadow='';">
   </a>
   <p align="center" style="margin-top:12px; color:#8b93c7; font-size:13.5px;">
-    👆 <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/index.html" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:#818cf8; font-weight:600;">Clique na imagem → abre a APLICAÇÃO em página inteira</a>
+    👆 <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/deploy/index.html" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:#818cf8; font-weight:600;">Clique na imagem → abre a APLICAÇÃO em página inteira</a>
     (nova aba · só o classificador, sem header do GitHub).<br>
-    <span style="font-size:12.5px;">⚠️ Pré-requisito: antes de clicar, habilite Pages em Settings → Pages → Branch <b>main</b> / Folder <b>/deploy</b>.</span>
+    <span style="font-size:12.5px;">✅ Pages já ativo · Branch <b>main</b> / Folder <b>/(root)</b> — app publicado em <code>/deploy/index.html</code>.</span>
   </p>
 </div>
 
