@@ -183,7 +183,7 @@ Os 20 notebooks CLEAN (código limpo) e EXECUTED (com outputs) estão na pasta [
 | **Modelagem** | `scikit-learn` (KMeans / StandardScaler / adjusted_rand_score) · `scipy` (Ward linkage / cophenet) · `kneed` (cotovelo) |
 | **Visualização** | `matplotlib` · `seaborn` · `plotly` |
 | **Notebooks** | `jupyter` · `nbclient` (execução headless programática de 20 notebooks CLEAN + EXECUTED via AST parse) |
-| **Qualidade de Código** | `ruff` (lint) · `black` (format) · `pytest` |
+| **Qualidade de Código** | `ruff` (lint) · `black` (format) · `pytest` · GitHub Actions CI (`.github/workflows/ci.yml`) |
 | **Deploy App (GitHub Pages)** | **HTML5 + CSS3 + Vanilla JavaScript** puro (NÃO precisa de backend · NÃO usa Vercel · NÃO usa Streamlit · classificação 100% cliente-side). |
 | **Docs Executáveis / Relatórios** | `python-docx` (docx 6 perguntas) · `openpyxl` (planilha metas comerciais 2 abas) |
 | **Controle de Versão** | `Git` + GitHub (commits planejados: 4 meses · julho/2026 a outubro/2026). |
@@ -220,6 +220,10 @@ uv run python gerar_todos_os_notebooks.py
 uv run python reports/fase4_kmeans_cotovelo_silhueta.py
 #    Fase 6 plano de metas
 uv run python reports/fase6_plano_metas_comercial.py
+
+# 6) Validar o pipeline de inferência (testes) e o lint
+uv run pytest
+uv run ruff check .
 ```
 
 ### 🎯 Classificar lojas novas SEM retreinar o modelo (deploy diário da Expansão)
@@ -268,17 +272,37 @@ A aplicação de classificação de lojas novas é **100% HTML/CSS/JS estático*
 
 Distribuído sob a licença MIT. Termos completos em:
 
-- 📜 [LICENSE.md](./LICENSE.md) — versão legível e formatada.
-- 📜 [LICENSE](./LICENSE) — cópia em texto puro compatível com GitHub License detection.
+- 📜 [LICENSE](./LICENSE) — MIT © 2026 Flávio Henrique Barbosa.
 
 ---
 
 ## 11. Contato
 
-**Flávio Henrique Barbosa**
+<div align="center">
 
-| Canal | Link / Contato |
-|---|---|
-| 👤 Nome | Flávio Henrique Barbosa |
-| 💼 LinkedIn | [linkedin.com/in/flávio-henrique-barbosa-38465938](https://www.linkedin.com/in/flávio-henrique-barbosa-38465938) |
-| 📧 Email | [flaviohenriquehb777@outlook.com](mailto:flaviohenriquehb777@outlook.com) |
+<p><b>Flávio Henrique Barbosa</b></p>
+
+<table align="center">
+  <thead>
+    <tr>
+      <th align="center">Canal</th>
+      <th align="center">Link / Contato</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">👤 Nome</td>
+      <td align="center">Flávio Henrique Barbosa</td>
+    </tr>
+    <tr>
+      <td align="center">💼 LinkedIn</td>
+      <td align="center"><a href="https://www.linkedin.com/in/flávio-henrique-barbosa-38465938">linkedin.com/in/flávio-henrique-barbosa-38465938</a></td>
+    </tr>
+    <tr>
+      <td align="center">📧 Email</td>
+      <td align="center"><a href="mailto:flaviohenriquehb777@outlook.com">flaviohenriquehb777@outlook.com</a></td>
+    </tr>
+  </tbody>
+</table>
+
+</div>

@@ -1,6 +1,6 @@
 [project]
 name = "retail-store-clustering"
-version = "0.1.0"
+version = "1.0.1"
 description = "Clusterização de Lojas de Varejo para Definição de Metas e Gestão por Pares"
 readme = "README.md"
 authors = [
@@ -46,3 +46,16 @@ target-version = ["py311"]
 [tool.ruff]
 target-version = "py311"
 line-length = 100
+# Notebooks (.ipynb) são artefatos gerados por `gerar_todos_os_notebooks.py`.
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+# Gate de correção do CI: apenas erros reais de código (sintaxe, nomes indefinidos,
+# imports inexistentes, variáveis usadas antes de atribuir). O lint estético completo
+# (isort/upgrade/bugbear) pode ser rodado localmente com `ruff check --extend-select ALL`.
+select = ["E9", "F63", "F7", "F82"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
