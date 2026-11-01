@@ -1,0 +1,22 @@
+# Normaliza finais de linha no repositório (evita ruído CRLF × LF entre SOs).
+* text=auto
+
+# ---- Binários (nunca normalizar / nunca fazer diff textual) ----
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.xlsx binary
+*.docx binary
+*.pptx binary
+*.pkl binary
+*.pickle binary
+*.joblib binary
+*.woff binary
+*.woff2 binary
+
+# ---- Notebooks: marca como linguagem de dados no GitHub ----
+*.ipynb linguist-language=Jupyter-Notebook

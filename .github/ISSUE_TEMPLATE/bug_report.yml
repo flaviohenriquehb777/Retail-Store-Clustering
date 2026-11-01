@@ -1,0 +1,59 @@
+name: "🐞 Relatar um bug"
+description: Reporte um comportamento inesperado no projeto
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por contribuir! Preencha os campos abaixo para facilitar a reprodução do problema.
+
+  - type: textarea
+    id: descricao
+    attributes:
+      label: Descrição do problema
+      description: O que aconteceu e o que você esperava que acontecesse?
+      placeholder: Ao importar o CSV na aba Lote, o app...
+    validations:
+      required: true
+
+  - type: textarea
+    id: passos
+    attributes:
+      label: Passos para reproduzir
+      placeholder: |
+        1. Abrir a aplicação
+        2. Ir em "📥 Lote (CSV)"
+        3. Importar o arquivo ...
+        4. Ver o erro ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ambiente
+    attributes:
+      label: Ambiente
+      options:
+        - App publicado no GitHub Pages
+        - App rodando localmente (http.server)
+        - deploy/predict.py (linha de comando)
+        - Notebooks / scripts de reports
+        - Outro
+    validations:
+      required: true
+
+  - type: input
+    id: versao
+    attributes:
+      label: Versão / commit
+      description: Versão (ex.: v1.0.0) ou hash do commit em que o problema ocorre.
+      placeholder: v1.0.0
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Mensagens de erro / logs
+      description: Cole aqui o traceback ou prints relevantes.
+      render: shell
+    validations:
+      required: false

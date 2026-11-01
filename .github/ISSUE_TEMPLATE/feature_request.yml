@@ -1,0 +1,39 @@
+name: "✨ Sugerir melhoria"
+description: Proponha uma melhoria ou nova funcionalidade
+title: "[MELHORIA] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Descreva a melhoria desejada e o valor que ela agrega ao projeto.
+
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual problema a melhoria resolve?
+      placeholder: Hoje não é possível...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Solução proposta
+      placeholder: Seria útil que...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas
+    validations:
+      required: false
+
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto adicional
+    validations:
+      required: false

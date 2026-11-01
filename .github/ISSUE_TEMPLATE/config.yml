@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📘 Documentação do projeto (README)
+    url: https://github.com/flaviohenriquehb777/Retail-Store-Clustering#readme
+    about: Consulte o README antes de abrir uma issue — instalação, uso e publicação estão documentados lá.
+  - name: 🚀 Aplicação publicada (GitHub Pages)
+    url: https://flaviohenriquehb777.github.io/Retail-Store-Clustering/deploy/index.html
+    about: Classificador de Lojas Novas — teste a classificação de lojas novas sem retreinar o modelo.
