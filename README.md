@@ -13,31 +13,17 @@
   </p>
 </div>
 
-<div align="center" style="margin: 28px 0 8px 0;">
+<div align="center" style="margin: 26px 0 10px 0;">
   <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/deploy/index.html"
-     target="_blank"
-     rel="noopener noreferrer"
-     title="Abrir Classificador de Lojas Novas — página inteira, só a aplicação">
-    <img
-      src="./assets/thumbnail-classificador-lojas-novas.png"
-      alt="Miniatura do Classificador de Lojas Novas — clique para abrir a aplicação em página inteira"
-      width="720"
-      style="
-        border-radius: 14px;
-        border: 1px solid #2b3270;
-        box-shadow:
-          0 1px 3px   rgba(99,102,241,0.10),
-          0 8px 20px  rgba(99,102,241,0.18),
-          0 18px 40px rgba(0,0,0,0.45);
-        transition: transform .25s ease, box-shadow .25s ease;
-      "
-      onmouseover="this.style.transform='translateY(-2px) scale(1.006)'; this.style.boxShadow='0 2px 5px rgba(99,102,241,0.13), 0 14px 30px rgba(99,102,241,0.24), 0 26px 56px rgba(0,0,0,0.55)';"
-      onmouseout="this.style.transform=''; this.style.boxShadow='';">
+     target="_blank" rel="noopener noreferrer"
+     title="Abrir o Classificador de Lojas Novas">
+    <img src="./assets/banner-classificador-lojas-novas.png"
+         alt="Classificador de Lojas Novas — clique para abrir a aplicação"
+         width="820"
+         style="border-radius:18px; box-shadow: 0 12px 34px rgba(99,102,241,0.22), 0 26px 60px rgba(0,0,0,0.45);">
   </a>
-  <p align="center" style="margin-top:12px; color:#8b93c7; font-size:13.5px;">
-    👆 <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/deploy/index.html" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:#818cf8; font-weight:600;">Clique na imagem → abre a APLICAÇÃO em página inteira</a>
-    (nova aba · só o classificador, sem header do GitHub).<br>
-    <span style="font-size:12.5px;">✅ Pages já ativo · Branch <b>main</b> / Folder <b>/(root)</b> — app publicado em <code>/deploy/index.html</code>.</span>
+  <p align="center" style="margin:14px 0 0 0; color:#7d85b0; font-size:13px;">
+    👆 <a href="https://flaviohenriquehb777.github.io/Retail-Store-Clustering/deploy/index.html" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:#818cf8; font-weight:600;">Clique na imagem para abrir a aplicação</a> — classifique lojas novas (expansão / reformadas) <b>sem retreinar o modelo</b>.
   </p>
 </div>
 
@@ -296,9 +282,3 @@ Distribuído sob a licença MIT. Termos completos em:
 | 👤 Nome | Flávio Henrique Barbosa |
 | 💼 LinkedIn | [linkedin.com/in/flávio-henrique-barbosa-38465938](https://www.linkedin.com/in/flávio-henrique-barbosa-38465938) |
 | 📧 Email | [flaviohenriquehb777@outlook.com](mailto:flaviohenriquehb777@outlook.com) |
-
----
-
-<div align="center">
-  <i>Projeto de Case — Ciência de Dados. Conforme combinado, commits/datas/histórico do git serão montados por pedido explícito do usuário (4 meses, julho/2026 a outubro/2026).</i>
-</div>
