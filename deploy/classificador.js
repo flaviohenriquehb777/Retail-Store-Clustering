@@ -10,7 +10,7 @@
 // --- Parâmetros do modelo idênticos ao deploy/params_modelo.json ---
 const MODELO = {
   versao: "k5_v2_prof6",
-  mediana_dist_concorrente: 2.325,   // metros
+  mediana_dist_concorrente: 2325,   // metros (mediana global real; NÃO confundir com 2,325)
   scaler: {
     // Ordem FIXA (igual scaler.feature_names_in_):
     ordem: [

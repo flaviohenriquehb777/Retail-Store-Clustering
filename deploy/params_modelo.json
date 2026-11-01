@@ -41,11 +41,11 @@
         "saida": "cv_sazonalidade_mensal_log1p"
       },
       "distancia_concorrente": {
-        "acao": "imputa_mediana_2.325_e_log1p",
+        "acao": "imputa_mediana_2325_e_log1p",
         "saida": "distancia_concorrente_log1p"
       }
     },
-    "mediana_imputacao_distancia_concorrente_metros": 2.325
+    "mediana_imputacao_distancia_concorrente_metros": 2325
   },
   "standard_scaler": {
     "ordem_features": [
@@ -217,7 +217,7 @@
   },
   "pipeline_predicao_novas_lojas_regra_geral": [
     "PASSO 1: calcular 6 features raw a partir dos dados diários da loja nova (se a série for < 180 dias, avisar que classificação é provisória).",
-    "PASSO 2: aplicar regras de transformação por feature (log1p e imputação distância = 2.325).",
+    "PASSO 2: aplicar regras de transformação por feature (log1p e imputação distância = 2325).",
     "PASSO 3: montar matriz X de 1 row com colunas NA MESMA ORDEM de FS (scaler.feature_names_in_).",
     "PASSO 4: padronizar com o scaler carregado (SÓ .predict/.transform; NUNCA .fit/_fit_transform em dados novos).",
     "PASSO 5: KMeans.predict(X_scaled) → cluster id 0..4 → mapeia para ordem_negocio C01..C03 + nome perfil.",
